@@ -58,14 +58,25 @@ export default {
     remove(node, data) {
       var ids = [data.catId];
       console.log("ids=>", ids);
-      this.$http({
-        url: this.$http.adornUrl("/product/category/delete"),
-        method: "post",
-        data: this.$http.adornData(ids, false),
-      }).then(({ data }) => {
-        console.log("删除成功!");
-        this.getMenus();
-      });
+      this.$confirm(`是否删除[${data.name}]菜单`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
+      })
+        .then(() => {
+          this.$http({
+            url: this.$http.adornUrl("/product/category/delete"),
+            method: "post",
+            data: this.$http.adornData(ids, false),
+          }).then(({ data }) => {
+            this.$message({
+              message: "恭喜你，删除成功了!",
+              type: "success",
+            });
+            this.getMenus();
+          });
+        })
+        .catch(() => {});
     },
   },
   created() {
