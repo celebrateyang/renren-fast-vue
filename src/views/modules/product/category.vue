@@ -5,6 +5,7 @@
     :expand-on-click-node="false"
     show-checkbox
     node-key="catId"
+    :default-expanded-keys="defaulstexKey"
   >
     <span class="custom-tree-node" slot-scope="{ node, data }">
       <span>{{ node.label }}</span>
@@ -35,6 +36,7 @@ export default {
   data() {
     return {
       menus: [],
+      defaulstexKey: [],
       defaultProps: {
         children: "children",
         label: "name",
@@ -74,6 +76,7 @@ export default {
               type: "success",
             });
             this.getMenus();
+            this.defaulstexKey=[node.parent.data.catId]
           });
         })
         .catch(() => {});
